@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 from aocd import get_data
 from dotenv import load_dotenv
 
@@ -43,21 +44,42 @@ def create_folder(year, day):
 def create_files(year, day):
     folder = f'{year}/day{day}'
     files = ['input.txt', 'solution.py']
-    for file in files:
-        file_path = f'{folder}/{file}'
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
+
+    input_path = f'{folder}/input.txt'
+    solution_path = f'{folder}/solution.py'
+    if os.path.exists(input_path) and os.path.exists(solution_path):
+        print("Files already exist.")
+        return
+
+    else:
+        if os.path.exists(input_path):
+            with open(input_path, 'r') as f:
                 content = f.read()
             if content:
-                print(f"File {file_path} already has content.")
-            else:
-                with open(file_path, 'w') as f:
-                    f.write('')
+                print(f"File {input_path} already has content.")
         else:
-            with open(file_path, 'w') as f:
-                f.write('')
             fetch_input(year, day)
 
+        if os.path.exists(solution_path):
+            content = f.read()
+            if content:
+                print(f"File {solution_path} already has content.")
+            else:
+                create_solution(solution_path)
+        else:
+            create_solution(solution_path)
+
+def create_solution(solution_path):
+
+    # Check working directory. We need AOC/tools/base.py.
+    current_dir = os.getcwd().split('/')[-1]
+    file = "base.py"
+    if current_dir != 'tools':
+        file = "./tools/" + file
+
+
+    # copy AOC/base.py as solution.py
+    shutil.copyfile(file, solution_path)
 
 def fetch_input(year, day):
     folder = f'{year}/day{day}'
