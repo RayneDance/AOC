@@ -3,8 +3,6 @@ class Solution:
         self.file_text = open("input.txt", "r").readlines()
 
 
-def main():
-    s = Solution()
-
 if __name__ == "__main__":
-    main()
+    s = Solution()
+    print(s.file_text)
