@@ -21,12 +21,12 @@ def decreasing_check(x):
     return True
 
 def produce_permutations(s):
-    perms = []
+    permsx = []
     for i in range(len(s)):
         x = s.copy()
         x.pop(i)
         perms.append(x)
-    return perms
+    return permsx
 
 p1 = 0
 p2 = 0
