@@ -25,7 +25,7 @@ def produce_permutations(s):
     for i in range(len(s)):
         x = s.copy()
         x.pop(i)
-        perms.append(x)
+        permsx.append(x)
     return permsx
 
 p1 = 0
