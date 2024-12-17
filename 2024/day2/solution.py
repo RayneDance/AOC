@@ -20,42 +20,28 @@ def decreasing_check(x):
             return False
     return True
 
-def d_increasing_check(x):
-    for i in range(len(x)-1):
-        if x[i] >= x[i+1] or x[i+1] - x[i] > 3:
-            y = x.copy()
-            z = x.copy()
-            y.pop(i)
-            z.pop(i+1)
-            return decreasing_check(y) or decreasing_check(z)
-    return True
+def produce_permutations(s):
+    perms = []
+    for i in range(len(s)):
+        x = s.copy()
+        x.pop(i)
+        perms.append(x)
+    return perms
 
-def d_decreasing_check(x, forgiveness = True):
-    for i in range(len(x)-1):
-        if x[i] <= x[i+1] or x[i+1] - x[i] > 3:
-            y = x.copy()
-            z = x.copy()
-            y.pop(i)
-            z.pop(i+1)
-            return increasing_check(y) or increasing_check(z)
-    return True
-
-safe = 0
+p1 = 0
+p2 = 0
 for line in puzzle:
-    safety = False
-    if line[0] > line[1]:
-        #safety = decreasing_check(line)
-        safety = d_decreasing_check(line)
-    if line[0] < line[1]:
-        #safety = increasing_check(line)
-        safety = d_increasing_check(line)
-    if line[0] == line[1]:
-        if line[1] > line[2]:
-            safety = decreasing_check(line[1:])
-        if line[1] < line[2]:
-            safety = increasing_check(line[1:])
-    safe += 1 * safety
+    safety = decreasing_check(line) or increasing_check(line)
+    p1 += 1 * safety
 
-print(safe)
+    if not safety:
+        perms = produce_permutations(line)
+        for perm in perms:
+            safety |= decreasing_check(perm) or increasing_check(perm)
+
+    p2 += 1 * safety
+
+print(f"Part 1: {p1}")
+print(f"Part 2: {p2}")
 
 

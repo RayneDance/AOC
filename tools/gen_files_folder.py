@@ -2,14 +2,16 @@ import os
 import sys
 import shutil
 from aocd import get_data
-from dotenv import load_dotenv
 
 def main():
+    env_var = "AOC_SESSION"
+    if not os.getenv(env_var):
+        raise Exception("Missing environment variable")
+
     year, day = get_args()
     create_folder(year, day)
     create_files(year, day)
 
-    load_dotenv()
 
 
 def get_args():
